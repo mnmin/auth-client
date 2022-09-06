@@ -19,7 +19,10 @@ export default function App() {
             },
             body: JSON.stringify({ username: "nicholo", password: 'mypassword'})
         })
-        console.log(res)
+        
+        const registeresUser = await res.json()
+
+        setRegisterResponse(registeresUser.user.username)
     };
 
     const login = async (e) => {
