@@ -40,7 +40,7 @@ export default function App() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            bosy: stringifyBody
+            body: stringifyBody
         })
 
         const existingUser = await res.json()
