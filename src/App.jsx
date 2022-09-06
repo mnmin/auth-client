@@ -5,6 +5,7 @@ import Input from './components/Input';
 
 export default function App() {
     const [user, setUser] = useState({ username: '', password: '' });
+    const [userLogin, setUserLogin] = useState({ username: '', password: ''})
     const [registerResponse, setRegisterResponse] = useState('');
     const [loginResponse, setLoginResponse] = useState('');
 
@@ -33,14 +34,20 @@ export default function App() {
         e.preventDefault();
         // Write your login code here
 
-        // const res = await fetch('http://localhost:4000/login', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     bosy: JSON.stringify({ username: })
-        // })
+        const stringifyBody = JSON.stringify( { username: userLogin.username, password: userLogin.password})
+        const res = await fetch('http://localhost:4000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            bosy: stringifyBody
+        })
 
+        const existingUser = await res.json()
+
+        localStorage.setItem('token', existingUser.token)
+
+        setLoginResponse(existingUser.token)
         
     };
 
@@ -59,6 +66,17 @@ export default function App() {
             ...user,
             [name]: value
         });
+
+    }
+
+    const handleLoginChange = (e) => {
+        const { value, name } = e.target;
+
+        setUserLogin({
+            ...userLogin,
+            [name]: value
+        })
+
     }
 
     return (
@@ -100,16 +118,16 @@ export default function App() {
                         type='text'
                         name='username'
                         placeholder='Username'
-                        value={user.username}
-                        handleChange={handleChange}
+                        value={userLogin.username}
+                        handleChange={handleLoginChange}
                     />,
                     <Input
                         key={2}
                         type='password'
                         name='password'
                         placeholder='Password'
-                        value={user.password}
-                        handleChange={handleChange}
+                        value={userLogin.password}
+                        handleChange={handleLoginChange}
                     />
                 ]}
             />
