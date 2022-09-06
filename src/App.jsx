@@ -12,22 +12,34 @@ export default function App() {
         e.preventDefault();
         // Write your register code here
 
+        const stringifyBody = JSON.stringify({ username: user.username, password: user.password})
+        console.log(stringifyBody)
+
+
         const res = await fetch('http://localhost:4000/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username: "nicholo", password: 'mypassword'})
+            body: stringifyBody
         })
         
-        const registeresUser = await res.json()
+        const registeredUser = await res.json()
 
-        setRegisterResponse(registeresUser.user.username)
+        setRegisterResponse(registeredUser.user.username)
     };
 
     const login = async (e) => {
         e.preventDefault();
         // Write your login code here
+
+        // const res = await fetch('http://localhost:4000/login', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     bosy: JSON.stringify({ username: })
+        // })
 
         
     };
